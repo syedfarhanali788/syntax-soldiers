@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GramSiksha: Rural EdTech Platform</title>
+    
+    <!-- Load Tailwind CSS CDN for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS for theme and core styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Use Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen">
+
+    <div id="app" class="dashboard-container max-w-4xl mx-auto py-6 px-4">
+        
+        <!-- HEADER & NAVIGATION -->
+        <header class="shadow-lg rounded-xl p-4 mb-6 sticky top-0 z-10 header-bg">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <h1 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-2 sm:mb-0">
+                    <span class="text-orange-500">EduGram</span> | <span id="user-role-display">Student</span>
+                </h1>
+                
+                <div class="flex space-x-3 sm:space-x-4 items-center nav-controls">
+                    
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" class="p-2 rounded-full text-indigo-500 hover:bg-gray-100 dark:text-yellow-400 dark:hover:bg-slate-600 transition duration-150" aria-label="Toggle Dark Mode">
+                        <!-- Moon Icon -->
+                        <svg id="moon-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        <!-- Sun Icon -->
+                        <svg id="sun-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </button>
+                    
+                    <!-- Language Selector (High Priority for Rural Context) -->
+                    <select id="language-selector" class="px-3 py-1 border border-gray-300 dark:border-slate-500 rounded-lg text-sm bg-gray-50 dark:bg-slate-600 dark:text-gray-200 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी (Local)</option>
+                        <option value="mr">मराठी</option>
+                    </select>
+
+                    <!-- Role Toggle -->
+                    <button id="toggle-role" class="px-3 py-1 bg-indigo-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition duration-150">
+                        Switch to Teacher View
+                    </button>
+                </div>
+            </div>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">Welcome, <span id="user-name" class="font-semibold">Priya Sharma</span></p>
+        </header>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <div id="student-dashboard" class="space-y-6">
+            <!-- Overall Progress Card -->
+            <div class="p-6 rounded-xl shadow-lg border-t-4 border-indigo-500 card-bg">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">My Learning Progress</h2>
+                <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8">
+                    
+                    <!-- Progress Ring -->
+                    <div class="relative w-24 h-24">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <circle
+                                class="text-gray-200 dark:text-slate-600"
+                                stroke-width="8"
+                                stroke="currentColor"
+                                fill="transparent"
+                                r="45"
+                                cx="50"
+                                cy="50"
+                            />
+                            <circle
+                                id="progress-ring"
+                                class="progress-ring-circle text-indigo-500"
+                                stroke-width="8"
+                                stroke-linecap="round"
+                                stroke="currentColor"
+                                fill="transparent"
+                                r="45"
+                                cx="50"
+                                cy="50"
+                            />
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span id="progress-percent" class="text-xl font-bold text-indigo-700 dark:text-indigo-300">0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div>
+                        <p class="text-lg text-gray-700 dark:text-gray-300"><span id="completed-lessons" class="font-bold text-indigo-600 dark:text-indigo-400">0</span> lessons completed</p>
+                        <p class="text-lg text-gray-700 dark:text-gray-300">Next Module: <span class="font-bold text-orange-500">Basic Mathematics Skills</span></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Progress saved locally for **Offline Access**</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Content List -->
+            <div class="p-6 rounded-xl shadow-lg card-bg">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Science: Simple Machines (Local Content)</h2>
+                <div id="lesson-list" class="space-y-3">
+                    <!-- Lesson cards will be injected here by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- TEACHER DASHBOARD CONTENT (Hidden by default) -->
+        <div id="teacher-dashboard" class="space-y-6 hidden">
+            <div class="p-6 rounded-xl shadow-lg border-t-4 border-orange-500 card-bg">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
+                    Teacher Analytics Dashboard
+                    <svg class="w-5 h-5 ml-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                </h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">View class progress and identify students needing support. (Offline data sync pending simulation)</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="stats-card p-3 rounded-lg shadow-sm text-center stat-card-bg">
+                        <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">32</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">Total Students</p>
+                    </div>
+                    <div class="stats-card p-3 rounded-lg shadow-sm text-center stat-card-bg">
+                        <p class="text-2xl font-bold text-green-600 dark:text-green-400">75%</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">Avg. Completion</p>
+                    </div>
+                    <div class="stats-card p-3 rounded-lg shadow-sm text-center stat-card-bg">
+                        <p class="text-2xl font-bold text-red-600 dark:text-red-400">6</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">Students Lagging</p>
+                    </div>
+                    <div class="stats-card p-3 rounded-lg shadow-sm text-center stat-card-bg">
+                        <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">3</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">Submissions Due</p>
+                    </div>
+                </div>
+
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Student Performance Overview</h3>
+                <div id="student-progress-table" class="overflow-x-auto">
+                    <!-- Teacher data table will be injected here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Link main JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+/* --- CSS VARIABLES FOR THEME MANAGEMENT --- */
+
+/* Light Theme Variables (Default) */
+:root {
+    --primary-bg: #f7f9fb;   /* Light Grayish Background */
+    --secondary-bg: #ffffff; /* White Card/Container Background */
+    --stat-bg: #f3f4f6;      /* Lighter stat card background */
+    --text-color: #111827;   /* Very Dark Text (Adjusted from #1f2937 for better contrast) */
+}
+
+/* Dark Theme Variables (Applied when .dark class is on <html>) */
+.dark {
+    --primary-bg: #1e293b;  /* Dark Slate Background */
+    --secondary-bg: #334155; /* Darker Card/Container Background */
+    --stat-bg: #475569;     /* Slightly lighter stat card background */
+    --text-color: #e2e8f0;   /* Light Text */
+}
+
+/* --- BASE STYLES & TRANSITIONS --- */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--primary-bg); 
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Class application based on CSS variables defined above */
+.header-bg {
+    background-color: var(--secondary-bg);
+}
+.dark .header-bg {
+    background-color: var(--secondary-bg); /* Use the dark variable */
+}
+
+.card-bg {
+    background-color: var(--secondary-bg);
+}
+
+.stat-card-bg {
+    background-color: var(--stat-bg);
+}
+
+/* General element transitions for smooth theme change */
+.lesson-card, .dashboard-container > div, header, th, td {
+    transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+/* --- LESSON CARD EFFECTS --- */
+.lesson-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+.dark .lesson-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* More visible shadow in dark mode */
+}
+
+/* --- PROGRESS RING STYLES --- */
+.progress-ring-circle {
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+/* --- RESPONSIVENESS (MOBILE-FIRST) --- */
+@media (max-width: 640px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+    /* Adjust header stacking on small screens */
+    header .flex-col {
+        align-items: flex-start;
+    }
+    .nav-controls {
+        margin-top: 1rem;
+        align-self: flex-end; /* Push controls to the right on mobile */
+    }
+}
